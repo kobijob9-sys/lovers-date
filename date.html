@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💕 Lovers Date Scheduler</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #e91e63;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 15px;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 20px;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #e91e63;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #c2185b;
+        }
+
+        #result {
+            display: none;
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 15px;
+            background: #fff0f5;
+            border-left: 5px solid #e91e63;
+        }
+
+        #result h2 {
+            color: #e91e63;
+            margin-bottom: 15px;
+        }
+
+        .heart {
+            text-align: center;
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .details {
+            line-height: 1.8;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="heart">💕</div>
+
+    <h1>Lovers Date Scheduler</h1>
+    <p class="subtitle">Plan a beautiful moment together ❤️</p>
+
+    <form id="dateForm">
+
+        <label for="person1">Your Name</label>
+        <input type="text" id="person1" placeholder="Enter your name" required>
+
+        <label for="person2">Partner's Name</label>
+        <input type="text" id="person2" placeholder="Enter partner's name" required>
+
+        <label for="date">Date</label>
+        <input type="date" id="date" required>
+
+        <label for="time">Time</label>
+        <input type="time" id="time" required>
+
+        <label for="activity">Date Activity</label>
+        <select id="activity" required>
+            <option value="">Choose an activity</option>
+            <option value="Dinner 🍽️">Dinner 🍽️</option>
+            <option value="Movie 🎬">Movie 🎬</option>
+            <option value="Beach Walk 🌊">Beach Walk 🌊</option>
+            <option value="Coffee Date ☕">Coffee Date ☕</option>
+            <option value="Picnic 🧺">Picnic 🧺</option>
+            <option value="Adventure 🏞️">Adventure 🏞️</option>
+            <option value="Just Quality Time ❤️">Just Quality Time ❤️</option>
+        </select>
+
+        <label for="location">Location</label>
+        <input type="text" id="location"
+               placeholder="e.g. Nairobi National Park"
+               required>
+
+        <label for="message">Special Message</label>
+        <textarea id="message" rows="3"
+                  placeholder="Write something sweet..."></textarea>
+
+        <button type="submit">
+            💖 Schedule Our Date
+        </button>
+
+    </form>
+
+    <div id="result">
+
+        <h2>💕 Date Confirmed!</h2>
+
+        <div class="details">
+            <p><strong>Couple:</strong> <span id="couple"></span></p>
+            <p><strong>📅 Date:</strong> <span id="dateOutput"></span></p>
+            <p><strong>⏰ Time:</strong> <span id="timeOutput"></span></p>
+            <p><strong>💝 Activity:</strong> <span id="activityOutput"></span></p>
+            <p><strong>📍 Location:</strong> <span id="locationOutput"></span></p>
+            <p><strong>💌 Message:</strong> <span id="messageOutput"></span></p>
+        </div>
+
+        <button onclick="window.print()">
+            🖨️ Print Date Plan
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+    document.getElementById("dateForm").addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        const person1 = document.getElementById("person1").value;
+        const person2 = document.getElementById("person2").value;
+        const date = document.getElementById("date").value;
+        const time = document.getElementById("time").value;
+        const activity = document.getElementById("activity").value;
+        const location = document.getElementById("location").value;
+        const message = document.getElementById("message").value;
+
+        // Format date
+        const formattedDate = new Date(date).toLocaleDateString(
+            "en-KE",
+            {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+            }
+        );
+
+        // Display results
+        document.getElementById("couple").textContent =
+            person1 + " ❤️ " + person2;
+
+        document.getElementById("dateOutput").textContent =
+            formattedDate;
+
+        document.getElementById("timeOutput").textContent =
+            time;
+
+        document.getElementById("activityOutput").textContent =
+            activity;
+
+        document.getElementById("locationOutput").textContent =
+            location;
+
+        document.getElementById("messageOutput").textContent =
+            message || "Looking forward to spending time together! ❤️";
+
+        document.getElementById("result").style.display = "block";
+
+        // Scroll to confirmation
+        document.getElementById("result").scrollIntoView({
+            behavior: "smooth"
+        });
+
+    });
+
+</script>
+
+</body>
+</html>
